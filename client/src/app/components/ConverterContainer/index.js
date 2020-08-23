@@ -4,6 +4,12 @@ import SwapVertIcon from '@material-ui/icons/SwapVert';
 //Components
 import Button from '../Button';
 import CustomSelect from '../CustomSelect';
+
+const url =
+  process.env.NODE_ENV === 'production'
+    ? window.location.href
+    : 'http://localhost:3001/';
+
 function ConverterContainer({ currencies }) {
   const getCurrency = (abbreviation) =>
     currencies.find((currency) => currency.abbreviation === abbreviation);
@@ -18,7 +24,7 @@ function ConverterContainer({ currencies }) {
   const convertCurrency = async (from, to, amount) => {
     try {
       const response = await fetch(
-        `http://localhost:3001/convert-currency/${from}/${to}/${amount}`,
+        `${url}convert-currency/${from}/${to}/${amount}`,
         {
           method: 'GET',
           headers: {

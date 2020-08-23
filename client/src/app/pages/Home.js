@@ -22,9 +22,8 @@ function Home() {
       });
       const data = await response.json();
       setCurrencies(data);
-      console.log(data);
     } catch (e) {
-      console.log(e);
+      // console.log(e);
     }
   };
 

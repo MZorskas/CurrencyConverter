@@ -1,11 +1,12 @@
 .ConverterContainer {
   color: var(--primary);
   width: 100%;
-  margin-top: 10px;
   border-radius: 6px;
   background-color: var(--white);
   display: flex;
   flex-direction: column;
+  justify-content: center;
+  align-items: center;
   text-align: center;
   -webkit-box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.55);
   -moz-box-shadow: 0px 5px 20px 0px rgba(0, 0, 0, 0.55);
@@ -13,6 +14,7 @@
   .ConverterContainerHeader {
     display: flex;
     height: 60px;
+    width: 100%;
     justify-content: center;
     align-items: center;
     border-bottom: 1px solid var(--primary);
@@ -23,10 +25,76 @@
       line-height: 48px;
     }
   }
+  .ConvertionForm {
+    width: 100%;
+    height: 340px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0px 20px;
+    .ConvertionContainer {
+      width: 100%;
+      margin: 0px 20px;
+      padding: 10px 10px 10px 10px;
+      .ConvertionInfo {
+        display: Flex;
+        justify-content: space-between;
+        align-items: center;
+        margin: 10px 0px 10px 0px;
+        .InputName {
+          display: flex;
+          align-items: center;
+          color: var(--black);
+          width: 100px;
+          h3 {
+            font-style: monospace;
+            font-weight: 400;
+            color: var(--primary);
+          }
+        }
+        .InputRate {
+          color: var(--grey);
+          font-style: monospace;
+          font-weight: 400;
+        }
+      }
+      .CustomInput {
+        width: 100%;
+        color: var(--grey);
+        border-radius: 4px;
+        height: 30px;
+        padding-left: 10px;
+        height: 42px;
+        font-size: 15px;
+        margin-top: 10px;
+        margin-bottom: 0px;
+        border: 1px solid var(--primary);
+        &:focus {
+          box-shadow: 0 0 0 1px var(--primary) !important;
+        }
+        &::placeholder {
+          color: var(--grey);
+        }
+      }
+
+      .ConvertionOutput {
+        position: relative;
+        display: flex;
+        svg {
+          position: absolute;
+          top: 20px;
+          right: 8px;
+          z-index: 3;
+        }
+      }
+    }
+  }
   .ConverterContainerFooter {
     border-top: 1px solid var(--primary);
     font-weight: 300;
     height: 60px;
+    width: 100%;
     font-size: 12px;
     display: flex;
     flex-direction: column;
@@ -37,63 +105,6 @@
       color: var(--primary);
       margin-left: 3px;
       margin-right: 3px;
-    }
-  }
-  .ConvertionContainer {
-    margin: 0px 20px;
-    padding: 10px 10px 10px 10px;
-  }
-  .CustomInput {
-    width: 100%;
-    color: var(--grey);
-    border-radius: 4px;
-    height: 30px;
-    padding-left: 10px;
-    height: 42px;
-    font-size: 15px;
-    margin-top: 10px;
-    margin-bottom: 0px;
-    border: 1px solid var(--primary);
-    &:focus {
-      box-shadow: 0 0 0 1px var(--primary) !important;
-    }
-    &::placeholder {
-      color: var(--grey);
-    }
-  }
-  .ConvertionInfo {
-    display: Flex;
-    justify-content: space-between;
-    align-items: center;
-    margin: 20px 20px 0px 20px;
-    .InputName {
-      display: flex;
-      align-items: center;
-      color: var(--black);
-      margin-bottom: -1px;
-      padding-left: 10px;
-      width: 100px;
-      h3 {
-        font-style: monospace;
-        font-weight: 400;
-        color: var(--primary);
-      }
-    }
-    .InputRate {
-      color: var(--grey);
-      margin-right: 10px;
-      font-style: monospace;
-      font-weight: 400;
-    }
-  }
-  .ConvertionOutput {
-    position: relative;
-    display: flex;
-    svg {
-      position: absolute;
-      top: 20px;
-      right: 8px;
-      z-index: 3;
     }
   }
 }

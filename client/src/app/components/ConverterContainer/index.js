@@ -56,7 +56,14 @@ function ConverterContainer({ currencies }) {
     e.preventDefault();
     setError(null);
 
-    if (!amount || isNaN(amount)) return;
+    if (!amount) return setError('Amount must be filled out');
+
+    if (isNaN(amount)) return setError('Must be a number');
+
+    if (amount <= 0) return setError('Must be a positive number');
+
+    if (fromCurrency === toCurrency)
+      return setError('Pick different currencies');
 
     convertCurrency(fromCurrency.abbreviation, toCurrency.abbreviation, amount);
   };
@@ -82,22 +89,22 @@ function ConverterContainer({ currencies }) {
       <div className="ConverterContainerHeader">
         <h2>Currency Converter</h2>
       </div>
-      <form className="ConvertionForm" onSubmit={handleSubmit}>
-        <div className="ConvertionInfo">
-          <div className="InputName">
-            <h3>From</h3>
-          </div>
-          <div className="InputRate">
-            {fromCurrency.rate && toCurrency.rate && (
-              <span>
-                {`1 ${fromCurrency.abbreviation} =
+      <form className="ConvertionForm" id="1" onSubmit={handleSubmit}>
+        <div className="ConvertionContainer">
+          <div className="ConvertionInfo">
+            <div className="InputName">
+              <h3>From</h3>
+            </div>
+            <div className="InputRate">
+              {fromCurrency.rate && toCurrency.rate && (
+                <span>
+                  {`1 ${fromCurrency.abbreviation} =
               ${(toCurrency.rate / fromCurrency.rate).toFixed(4)} 
               ${toCurrency.abbreviation}`}
-              </span>
-            )}
+                </span>
+              )}
+            </div>
           </div>
-        </div>
-        <div className="ConvertionContainer">
           <CustomSelect
             value={fromCurrency}
             onChange={selectFromCurrency}
@@ -108,31 +115,29 @@ function ConverterContainer({ currencies }) {
             type="text"
             placeholder="Amount"
             autoFocus
-            required
             maxLength="12"
             onChange={(e) => {
               setAmount(e.target.value);
             }}
           />
         </div>
-        {error && <p style={{ color: 'red' }}>{error}</p>}
+        {error && <p style={{ width: '60%', color: 'red' }}>{error}</p>}
+        <div className="ConvertionContainer">
+          <div className="ConvertionInfo">
+            <div className="InputName">
+              <h3>To</h3>
+            </div>
 
-        <div className="ConvertionInfo">
-          <div className="InputName">
-            <h3>To</h3>
-          </div>
-
-          <div className="InputRate">
-            {fromCurrency.rate && toCurrency.rate && (
-              <span>
-                {`1 ${toCurrency.abbreviation} =
+            <div className="InputRate">
+              {fromCurrency.rate && toCurrency.rate && (
+                <span>
+                  {`1 ${toCurrency.abbreviation} =
               ${(fromCurrency.rate / toCurrency.rate).toFixed(4)}
               ${fromCurrency.abbreviation}`}
-              </span>
-            )}
+                </span>
+              )}
+            </div>
           </div>
-        </div>
-        <div className="ConvertionContainer">
           <CustomSelect
             value={toCurrency}
             onChange={selectToCurrency}
@@ -155,13 +160,18 @@ function ConverterContainer({ currencies }) {
             </a>
           </div>
         </div>
-        <Button
-          onclick={handleSubmit}
-          required={!amount || isNaN(amount) || fromCurrency === toCurrency}
-        >
-          Convert
-        </Button>
       </form>
+      <Button
+        onclick={handleSubmit}
+        type="submit"
+        form="1"
+        required={
+          !amount || isNaN(amount) || amount <= 0 || fromCurrency === toCurrency
+        }
+      >
+        Convert
+      </Button>
+
       <div className="ConverterContainerFooter">
         <span className="Copyright">Bank of Lithuania exchange rates.</span>
         <span>

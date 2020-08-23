@@ -78,52 +78,49 @@ convertCurrency = async (req, res) => {
   let fromCur = req.params.from;
   let toCur = req.params.to;
   let amount = req.params.amount;
-  // let amount = req.body.amount;
-  // console.log(fromCur, toCur, amount);
   try {
-    let fromCurrency = { rate: 1 };
-    let toCurrency = { rate: 1 };
+    //Check if all values are true
     if (!fromCur || !toCur || !amount)
-      return res.status(400).json({ failure: 'All fields must be typed in.' });
+      return res.status(400).json({ failure: 'All fields must be filled out' });
 
+    //Check if amount is a number
+    if (isNaN(amount))
+      return res.status(400).json({ failure: 'Must be a number' });
+
+    //Convert amount to number
+    amount = Number(amount);
+
+    //Check if amount is not longer than 12 digits
     if (amount.length > 12)
       return res
         .status(400)
         .json({ failure: 'Amount must not be longer than 12 numbers.' });
 
-    if (isNaN(amount))
-      return res.status(400).json({ failure: 'Must be a number' });
-    if (fromCur !== 'EUR') {
-      fromCurrency = await CurrencyModel.findOne({
-        abbreviation: fromCur,
-        rate: { $exists: true },
-      });
-      // console.log(fromCurrency);
+    let fromCurrency = await CurrencyModel.findOne({
+      abbreviation: fromCur,
+      rate: { $exists: true },
+    });
 
-      if (!fromCurrency) {
-        logger.error(`${fromCur} currency doesnt exist on our DB`);
-        return res
-          .status(400)
-          .json({ failure: `${fromCur} currency doesnt exist on our DB` });
-      }
+    if (!fromCurrency) {
+      logger.error(`${fromCur} currency doesnt exist on our DB`);
+      return res
+        .status(400)
+        .json({ failure: `${fromCur} currency doesnt exist on our DB` });
     }
 
-    if (toCur !== 'EUR') {
-      toCurrency = await CurrencyModel.findOne({
-        abbreviation: toCur,
-        rate: { $exists: true },
-      });
-      // console.log(toCurrency);
-      if (!toCurrency) {
-        logger.error(`${toCur} currency doesnt exist on our DB`);
-        return res
-          .status(400)
-          .json({ failure: `${toCur} currency doesnt exist on our DB` });
-      }
+    let toCurrency = await CurrencyModel.findOne({
+      abbreviation: toCur,
+      rate: { $exists: true },
+    });
+
+    if (!toCurrency) {
+      logger.error(`${toCur} currency doesnt exist on our DB`);
+      return res
+        .status(400)
+        .json({ failure: `${toCur} currency doesnt exist on our DB` });
     }
 
     let conversionRate = fromCurrency.rate / toCurrency.rate;
-    // console.log(conversionRate);
     let responseValue = (amount / conversionRate).toFixed(2);
     logger.info(
       `Currency converted. ${amount} ${fromCur} = ${responseValue} ${toCur}`
@@ -144,7 +141,6 @@ getCurrencyListWithRates = async (req, res) => {
     currencyList = await CurrencyModel.find({
       rate: { $exists: true },
     });
-    // console.log(currencyList);
     res.json(currencyList);
   } catch (e) {
     logger.error(`Something went wrong`);

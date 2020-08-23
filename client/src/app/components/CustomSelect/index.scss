@@ -1,0 +1,63 @@
+.CustomSelect {
+  &__control {
+    border: 1px solid var(--primary) !important;
+    // background-color: #48c9b0 !important;
+    height: 42px;
+  }
+  &__control--is-focused {
+    box-shadow: 0 0 0 1px var(--primary) !important;
+    // background-color: #48c9b0 !important;
+  }
+
+  &__indicator-separator {
+    background-color: var(--primary) !important;
+    // background-color: #48c9b0 !important;
+  }
+  &__indicator {
+    color: var(--primary) !important;
+  }
+
+  &__option {
+    .CustomLabel {
+      color: var(--grey);
+      display: flex;
+      align-items: center;
+      img {
+        border-radius: 50%;
+        border: 1px solid var(--primary);
+        width: 32px;
+        margin-right: 10px;
+        padding-left: -5px;
+      }
+    }
+  }
+  &__option--is-focused {
+    background-color: rgba(225, 225, 225, 0.884) !important;
+  }
+  &__option--is-selected {
+    background-color: rgba(5, 214, 151, 0.541) !important;
+  }
+  &__value-container {
+    font-size: 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+  &__input {
+    padding-left: 15px;
+    border: none;
+  }
+  &__single-value {
+    .CustomLabel {
+      display: flex;
+      align-items: center;
+      color: var(--grey);
+      img {
+        border-radius: 50%;
+        border: 1px solid var(--primary);
+        width: 32px;
+        margin-right: 10px;
+      }
+    }
+  }
+}

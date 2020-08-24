@@ -1,4 +1,7 @@
 .CustomSelect {
+  &__menu {
+    z-index: 4 !important;
+  }
   &__control {
     border: 1px solid var(--primary) !important;
     // background-color: #48c9b0 !important;

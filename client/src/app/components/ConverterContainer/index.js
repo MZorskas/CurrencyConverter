@@ -121,7 +121,7 @@ function ConverterContainer({ currencies }) {
             }}
           />
         </div>
-        {error && <p style={{ width: '60%', color: 'red' }}>{error}</p>}
+        {error && <p style={{ color: 'red' }}>{error}</p>}
         <div className="ConvertionContainer">
           <div className="ConvertionInfo">
             <div className="InputName">

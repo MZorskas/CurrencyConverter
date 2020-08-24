@@ -79,10 +79,6 @@ convertCurrency = async (req, res) => {
   let toCur = req.params.to;
   let amount = req.params.amount;
   try {
-    //Check if all values are true
-    if (!fromCur || !toCur || !amount)
-      return res.status(400).json({ failure: 'All fields must be filled out' });
-
     //Check if amount is a number
     if (isNaN(amount))
       return res.status(400).json({ failure: 'Must be a number' });
@@ -90,11 +86,16 @@ convertCurrency = async (req, res) => {
     //Convert amount to number
     amount = Number(amount);
 
-    //Check if amount is not longer than 12 digits
+    //Check if amount is a positive number
+    if (amount <= 0)
+      return res
+        .status(400)
+        .json({ failure: 'Amount must be a positive number' });
+
     if (amount.length > 12)
       return res
         .status(400)
-        .json({ failure: 'Amount must not be longer than 12 numbers.' });
+        .json({ failure: 'Amount must not be longer than 12 digits' });
 
     let fromCurrency = await CurrencyModel.findOne({
       abbreviation: fromCur,

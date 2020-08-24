@@ -11,7 +11,6 @@ const logger = createLogger({
     new transports.MongoDB({
       levels: {
         info: 0,
-        ok: 1,
         error: 2,
       },
       db: process.env.DB_CONNECTION,

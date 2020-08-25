@@ -79,24 +79,32 @@ convertCurrency = async (req, res) => {
   let toCur = req.params.to;
   let amount = req.params.amount;
   try {
+    logger.info(
+      `Currency conversion request. From ${fromCur} to ${toCur}. Amount: ${amount}`
+    );
     //Check if amount is a number
-    if (isNaN(amount))
-      return res.status(400).json({ failure: 'Must be a number' });
+    if (isNaN(amount)) {
+      logger.error(`Amount is not a number`);
+      return res.status(400).json({ failure: 'Must be a positive number' });
+    }
 
     //Convert amount to number
     amount = Number(amount);
 
     //Check if amount is a positive number
-    if (amount <= 0)
+    if (amount <= 0) {
+      logger.error(`Amount is not a positive number`);
       return res
         .status(400)
         .json({ failure: 'Amount must be a positive number' });
+    }
 
-    if (amount.length > 12)
+    if (amount.length > 12) {
+      logger.error(`Amount is longer than 12 digits`);
       return res
         .status(400)
         .json({ failure: 'Amount must not be longer than 12 digits' });
-
+    }
     let fromCurrency = await CurrencyModel.findOne({
       abbreviation: fromCur,
       rate: { $exists: true },

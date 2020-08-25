@@ -15,7 +15,7 @@ function CustomSelect({ value, options, onChange }) {
           {`${option.abbreviation} / ${option.nameEng}`}
         </div>
       )}
-      getOptionValue={(option) => option.nameEng}
+      getOptionValue={(option) => `${option.abbreviation} / ${option.nameEng}`}
       options={options}
       onChange={onChange}
       classNamePrefix="CustomSelect"

@@ -8,7 +8,7 @@ const fetchCurrencyList = () => {
   https.get(
     'https://www.lb.lt/webservices/FxRates/FxRates.asmx/getCurrencyList?',
     (res) => {
-      if (!res.ok) {
+      if (!res.statusCode === 200) {
         logger.error(`Status Code: ${res.statusCode} ${res.statusMessage}`);
         return;
       }
@@ -37,7 +37,7 @@ const fetchCurrencyRates = () => {
   https.get(
     'https://www.lb.lt/webservices/FxRates/FxRates.asmx/getCurrentFxRates?tp=',
     (res) => {
-      if (!res.ok) {
+      if (!res.statusCode === 200) {
         logger.error(`Status Code: ${res.statusCode} ${res.statusMessage}`);
         return;
       }

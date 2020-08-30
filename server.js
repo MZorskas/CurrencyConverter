@@ -13,12 +13,18 @@ mongoose.connect(
     useNewUrlParser: true,
     useUnifiedTopology: true,
   },
-  () => console.log('Connected to DB!')
+  () => {
+    console.log('Connected to DB!');
+    if (process.env.NODE_ENV === 'production') {
+      fetchCurrencyList();
+      fetchCurrencyRates();
+    }
+  }
 );
 
 const app = express();
 
-schedule.scheduleJob('0 0 * * *', () => {
+schedule.scheduleJob('1 0 * * *', () => {
   fetchCurrencyList();
   fetchCurrencyRates();
 });
@@ -37,6 +43,9 @@ if (process.env.NODE_ENV === 'production') {
 
 const port = process.env.PORT || 3001;
 
-app.listen(port, () => {
-  logger.info(`Starting. Server is running on port: ${port}`);
-});
+if (process.env.NODE_ENV !== 'test') {
+  app.listen(port, () => {
+    logger.info(`Starting. Server is running on port: ${port}`);
+  });
+}
+module.exports = app;
